@@ -1,0 +1,17 @@
+require 'watchr'
+
+watch( '^src/client-javascript/(.*)\js' )  do |md| 
+  puts("#{md[0]} updated. Rebuilding client-side JS....")
+  system("rake client")
+end
+
+watch( '^src/server-javascript/(.*)\js' )  do |md| 
+  puts("#{md[0]} updated. Rebuilding server-side JS....")
+  system("rake server")
+end
+
+watch( '^src/sass/(.*)\scss' )  do |md| 
+  puts("#{md[0]} updated. Rebuilding Stylesheets....")
+  system("support/sass/compass compile")
+end
+

@@ -1,2 +1,3 @@
+support/sass/.sass-cache/*
 public/client-javascript/*.js
 server.js

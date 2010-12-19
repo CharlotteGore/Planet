@@ -1,6 +1,9 @@
 cg-generic
 ==========
 
+Introduction
+------------
+
 A generic system for building client-side and server-side javascript, as well as compiling sass into css. Derived from the jQuery build system.
 
 Does JSlint checking of all Javascript and minifies and compiles client-side javascript using Google's Closure compiler. It is assumed this will be used for writing Node.JS applications for the server-side, but you don't need Node to be installed in order to build, as it's distributed with Rhino to run the JSlint checking. 

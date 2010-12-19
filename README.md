@@ -56,3 +56,4 @@ Directory Structure
 /lib - supporting files for the server-side javascript, CommonJS modules etc. 
 /build - contains tools used for compiling the project - Rhino, JSlint, Google Closure Compiler and the Compass project
 /src - contains source files for the client-side & server-side JS, and the Sass stylesheet files. 
+/spec - for your unit tests. Don't forget to add tests. Use whatever Unit Test framework you like.

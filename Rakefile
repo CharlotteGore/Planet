@@ -13,13 +13,13 @@ test_dir  = File.join( prefix, 'spec' )
 client_dist_dir  = ENV['DIST_DIR'] || File.join( prefix, 'public/client-javascript' )
 server_dist_dir = prefix
 
-client_files = %w{client}.map { |js| File.join( client_src, "#{js}.js" ) }
-server_files = %w{server}.map { |js| File.join( server_src, "#{js}.js" ) }
+client_files = %w{intro client outro}.map { |js| File.join( client_src, "#{js}.js" ) }
+server_files = %w{intro requires server outro}.map { |js| File.join( server_src, "#{js}.js" ) }
 
 # Output files/dirs
 
-client_app         = File.join( client_dist_dir, "node-experiments.js" )
-client_app_min     = File.join( client_dist_dir, "node-experiments.min.js" )
+client_app         = File.join( client_dist_dir, "client.js" )
+client_app_min     = File.join( client_dist_dir, "client.min.js" )
 
 server_app         = File.join( prefix, "server.js" )
 
@@ -92,7 +92,7 @@ end
 directory client_dist_dir
 
 file client_app => [client_dist_dir, client_files].flatten do
-  puts "Building node-experiments.js..."
+  puts "Building client.js..."
   
   File.open(client_app, 'w') do |f|
     f.write cat(client_files).gsub(/(Date:.)/, "\\1#{date}" ).gsub(/@VERSION/, version)
@@ -101,7 +101,7 @@ file client_app => [client_dist_dir, client_files].flatten do
 end
 
 file client_app_min => client_app do
-  puts "Building node-experiments.min.js..."
+  puts "Building client.min.js..."
 
   sh "#{minfier} --js #{client_app} --js_output_file #{client_app_min}"
 end

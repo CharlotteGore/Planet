@@ -39,7 +39,7 @@ verbose(false)
 task :default => "all"
 
 desc "Builds Client and Server application"
-task :all => [:client, :server] do
+task :all => [:client, :server, :sass] do
   puts "Build complete."
 end
 
@@ -61,6 +61,12 @@ task :merge_server => [server_app]
 
 desc "Builds a minified version of node-experiments.js"
 task :min => client_app_min
+
+desc "Compiles SCSS files into css stylesheets"
+task :sass do
+	puts "Compiling scss files into stylesheets"
+	sh "#{compass}"
+end
 
 desc "Removes dist folder"
 task :clean do

@@ -1,1 +1,2 @@
-support/*
+public/client-javascript/*.js
+server.js

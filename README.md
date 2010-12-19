@@ -43,3 +43,16 @@ rake server
 rake sass
 
 -compiles the sass into css
+
+Outputs
+-------
+
+By default, the build system creates client.js and client.min.js in ./public/client-javascript, creates server.js in the root and creates ie.css, print.css and styles.css in ./public/client-css.
+
+Directory Structure
+-------------------
+
+/public - static files expected to be served to the client
+/lib - supporting files for the server-side javascript, CommonJS modules etc. 
+/build - contains tools used for compiling the project - Rhino, JSlint, Google Closure Compiler and the Compass project
+/src - contains source files for the client-side & server-side JS, and the Sass stylesheet files. 

@@ -13,11 +13,12 @@ test_dir  = File.join( prefix, 'spec' )
 client_dist_dir  = ENV['DIST_DIR'] || File.join( prefix, 'public/client-javascript' )
 server_dist_dir = prefix
 
+
+# The source files (in the order they are to be merged)
 client_files = %w{intro client outro}.map { |js| File.join( client_src, "#{js}.js" ) }
 server_files = %w{intro requires server outro}.map { |js| File.join( server_src, "#{js}.js" ) }
 
 # Output files/dirs
-
 client_app         = File.join( client_dist_dir, "client.js" )
 client_app_min     = File.join( client_dist_dir, "client.min.js" )
 

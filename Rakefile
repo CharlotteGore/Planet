@@ -3,7 +3,6 @@ prefix    = File.dirname( __FILE__)
 # Directory variables
 client_src   = File.join( prefix, 'src/client-javascript' )
 server_src   = File.join( prefix, 'src/server-javascript' )
-compass_dir		 = File.join( prefix, 'support/sass' )
 
 build_dir = File.join( prefix, 'build' )
 test_dir  = File.join( prefix, 'spec' )
@@ -31,7 +30,7 @@ version    = File.read( File.join( prefix, 'version.txt' ) ).strip
 # Build tools
 rhino      = "java -jar #{build_dir}/js.jar"
 minfier    = "java -jar #{build_dir}/google-compiler-20100917.jar"
-compass    = "compass compile #{compass_dir}"
+compass    = "compass compile #{build_dir}/sass"
 
 # Turn off output other than needed from `sh` and file commands
 verbose(false) 

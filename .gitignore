@@ -1,3 +1,3 @@
-support/sass/.sass-cache/*
+build/sass/.sass-cache/*
 public/client-javascript/*.js
 server.js

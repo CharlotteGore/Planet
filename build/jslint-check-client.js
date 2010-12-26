@@ -1,6 +1,6 @@
 load("build/jslint.js");
 
-var src = readFile("public/client-scripts/node-experiments.js");
+var src = readFile("debug/planet.js");
 
 JSLINT(src, { evil: true, forin: true, maxerr: 100 });
 

@@ -4,14 +4,3 @@ watch( '^src/client-javascript/(.*)\js' ) {|md|
   puts("#{md[0]} updated. Rebuilding client-side JS....")
   system("rake client")
 }
-
-watch( '^src/server-javascript/(.*)\js' ) {|md| 
-  puts("#{md[0]} updated. Rebuilding server-side JS....")
-  system("rake server")
-}
-
-watch( '^src/sass/(.*)\scss' )  {|md| 
-  puts("#{md[0]} updated. Rebuilding Stylesheets....")
-  system("rake sass")
-}
-

@@ -1,12 +1,12 @@
 /*!
- * Planet v@VERSION - a simple cross-platform path drawing library 
+ * Planet v0.0.0 - a simple cross-platform path drawing library 
  * http://charlottegore.com
  *
  * Copyright 2010, Charlotte Gore
  * Licensed under the MIT license.
  *
  *
- * Date: 
+ * Date: Sun Dec 19 11:05:34 2010 +0000
  */
  
  (function(window){
@@ -177,3 +177,27 @@
 	
 
  
+	// Path drawing functions
+	planet.fn.extend({
+	
+		_pathVML : function( obj ){
+		
+		},
+		
+		_pathSVG : function( obj ){
+		
+		},
+		
+		_pathCanvas : function( obj ){
+		
+		}
+	
+	});
+	
+/* outro.js */
+
+	window.planet = planet;
+
+})(window);
+
+

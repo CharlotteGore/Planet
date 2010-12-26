@@ -1,0 +1,4 @@
+/* VML Styles */
+v\:rect, v\:roundrect, v\:line, v\:polyline, v\:curve, v\:arc, v\:oval, v\:image, v\:shape, v\:group, v\:skew, v\:stroke, v\:fill { behavior:url(#default#VML); display:inline-block }
+
+#drawing-surface {width:500px;height:500px;position:relative;margin:0;padding:0}

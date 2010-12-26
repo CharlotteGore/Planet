@@ -29,6 +29,15 @@
 		
 		$('body').remove(a);
 		
+		if(doesSupport){
+				var headElement = document.getElementsByTagName("head")[0],
+				styleElement = document.createElement("style");
+				styleElement.type = "text/css";
+				headElement.appendChild(styleElement);
+				styleElement.styleSheet.cssText = "v\:rect, v\:roundrect, v\:line, v\:polyline, v\:curve, v\:arc, v\:oval, v\:image, v\:shape, v\:group, v\:skew, v\:stroke, v\:fill { behavior:url(#default#VML); display:inline-block }";
+
+		}
+		
 		return doesSupport;
 	}(),
 	
@@ -111,7 +120,7 @@
 			init : function( selector ){
 				// For SVG, we create an SVG element in the SVG namespace and append to the 
 				// container, setting the size appropriately. 
-				var svg;
+				var svg, container = $(selector);
 			
 				this.svgNS = "http://www.w3.org/2000/svg";
 				
@@ -120,12 +129,12 @@
 				svg.setAttributeNS(null, "style", "position:absolute;top:0;left:0");
 				
 				$(svg)
-					.css("width",width)
-					.css("height",height);
+					.css("width",container.width())
+					.css("height",container.height());
 				
 				this.container = $(svg);
 				
-				$(selector).append(this.container);
+				container.append(this.container);
 				
 				this.mode = "svg"; 
 				return this;
@@ -133,6 +142,18 @@
 		},
 		canvas : {
 			init : function( selector ){
+				var canvas, container = $(selector);
+				
+				canvas = document.createElement("canvas");
+				
+				$(canvas)
+					.attr('height', height)
+					.attr('width', width);
+				
+				container.append(canvas);
+				
+				this.container = canvas.getContext('2d');
+				
 				this.mode = "canvas";
 				return this;
 			}

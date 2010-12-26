@@ -1,18 +1,26 @@
 
 	// Path drawing functions
-	planet.fn.extend({
 	
-		_pathVML : function( obj ){
-		
-		},
-		
-		_pathSVG : function( obj ){
-		
-		},
-		
-		_pathCanvas : function( obj ){
+	planet.vml.extend({
+	
+		path : function( obj ){
 		
 		}
 	
+	});
+	
+	planet.svg.extend({
+	
+		path : function( obj ){
+		
+		}
+	});
+	
+	planet.canvas.extend({
+	
+		path : function( obj ){
+		
+		}
+		
 	});
 	

@@ -18,7 +18,7 @@ client_dist_dir  = ENV['DIST_DIR'] || File.join( prefix, 'dist' )
 client_debug_dir  = ENV['DEBUG_DIR'] || File.join( prefix, 'debug' )
 
 # The source files (in the order they are to be merged)
-client_files = %w{intro path outro}.map { |js| File.join( client_src, "#{js}.js" ) }
+client_files = %w{intro line path box outro}.map { |js| File.join( client_src, "#{js}.js" ) }
 
 puts client_files
 

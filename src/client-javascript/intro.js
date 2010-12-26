@@ -13,7 +13,7 @@
 	// Bunch of helper functions to detect browser functionality...
 	
 	// VML..
-	var isVMLSupported = function(){
+		var isVMLSupported = function(){
 		
 		var a, b, doesSupport;
 		
@@ -30,20 +30,6 @@
 		$('body').remove(a);
 		
 		return doesSupport;
-	
-		/*
-		var b, doesSupport;
-        
-        $('body').append('<div id="_planet_vml_test_"><v:shape id="vml_flag1" adj="1" /></div>');
-        
-        b = $('#vml_flag1')[0];
-        b.style.behavior = "url(#default#VML)";
-        doesSupport = b ? typeof b.adj == "object": true;
-        
-        $('#_planet_vml_test_').remove();
-	  
-	    return doesSupport;
-	    */
 	}(),
 	
 	// SVG...
@@ -64,89 +50,26 @@
 	
 	planet;
 	
-	// Priority is Forced->Canvas->VML->SVG->Die
-	if(isForcedMode){
-	
-		planet = function( selector ){
-			return new planet.fn.init( window.forcePlanetMode, selector );
-		};
-	
-	}else if(isCanvasSupported){
-	
-		planet = function( selector ){
-			return new planet.fn.init( "canvas", selector );
-		};
-	
-	}else if(isVMLSupported){
-	
-		planet = function( selector ){
-			return new planet.fn.init( "vml", selector );
-		};
+	planet = function( selector, mode ){
 		
-	}else if(isSVGSupported){
-	
-		planet = function( selector ){
-			return new planet.fn.init( "svg", selector );
-		};
-	
-	}else{
-		throw("This browser does not support VML, SVG or Canvas.");
-	}
-	
-	planet.fn = planet.prototype = {
-		// init..
-		init : function( mode, selector ){
-			if($(selector).length > 0 && mode){
-				if(mode==="vml"){
-					// with vml the container is all that's necessary
-					this.container = $(selector);
-					
-					// override the path renderer...
-					this.path = this._pathVML;
-					
-					return this;
-				
-				}else if(mode==="svg"){
-				
-					// SVG elements need to be created in a namespace...
-					this.svgNS = "http://www.w3.org/2000/svg";
-					
-					// Which means creating an SVG node as well, child of the selector, becomes the container..
-					var svg = document.createElementNS(this.svgNS, "svg");
-					svg.setAttributeNS(null, "version", "1.1");
-					
-					this.container = $(svg);
-					
-					$(selector).append(this.container);
-					
-					// override the path renderer
-					this.path = this._pathVML;
-					
-					return this;
-					
-				}else if(mode==="canvas"){
-					// create a canvas element, return the 2d context.
-					var canvas = document.createElement("canvas");
-					
-					$(selector).append(canvas);
-					
-					this.container = canvas.getContext('2d');
-					
-					this.path = this._pathCanvas;
-				
-				}
-
-			}else{
-				throw("Unable to detect a mode, or unable to initialise " + selector + " as a container, $('" + selector + "').length = 0, meaning it doesn't exist.");
+		if(!mode){
+			if(isCanvasSupported){
+				mode = "canvas";
+			}else if(isVMLSupported){
+				mode = "vml";
+			}else if(isSVGSupported){
+				mode = "svg";
 			}
-			return this;
+		}
+		
+		try{
+			return new planet[mode].init( selector );
+		}catch(e){
+			throw(e);
 		}
 	};
-
 	
-	planet.fn.init.prototype = planet.fn;
-	
-	planet.fn.extend = planet.extend = function(){
+	planet.extend = function(){
 		// Based on code in jQuery
 		var target = this, i = 0, length = arguments.length, options, name, src, copy;
 	
@@ -175,5 +98,53 @@
 		return target;
 	};	
 	
+	planet.extend({
+		vml : {
+			init : function( selector ){
+			
+				this.container = $(selector);
+				this.mode = "vml";
+				return this;
+			}
+		},
+		svg : {
+			init : function( selector ){
+				// For SVG, we create an SVG element in the SVG namespace and append to the 
+				// container, setting the size appropriately. 
+				var svg;
+			
+				this.svgNS = "http://www.w3.org/2000/svg";
+				
+				svg = document.createElementNS(this.svgNS, "svg");
+				svg.setAttributeNS(null, "version", "1.1");
+				svg.setAttributeNS(null, "style", "position:absolute;top:0;left:0");
+				
+				$(svg)
+					.css("width",width)
+					.css("height",height);
+				
+				this.container = $(svg);
+				
+				$(selector).append(this.container);
+				
+				this.mode = "svg"; 
+				return this;
+			}
+		},
+		canvas : {
+			init : function( selector ){
+				this.mode = "canvas";
+				return this;
+			}
+		}
+	});
+	
+	// references to make things easier...
+	planet.vml.init.prototype = planet.vml;
+	planet.svg.init.prototype = planet.svg;
+	planet.canvas.init.prototype = planet.canvas;
+	
+	// hook extend into the various prototypes
+	planet.svg.extend = planet.canvas.extend = planet.vml.extend = planet.extend;	
 
  

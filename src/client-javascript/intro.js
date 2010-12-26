@@ -34,7 +34,7 @@
 				styleElement = document.createElement("style");
 				styleElement.type = "text/css";
 				headElement.appendChild(styleElement);
-				styleElement.styleSheet.cssText = "v\:rect, v\:roundrect, v\:line, v\:polyline, v\:curve, v\:arc, v\:oval, v\:image, v\:shape, v\:group, v\:skew, v\:stroke, v\:fill { behavior:url(#default#VML); display:inline-block }";
+				styleElement.styleSheet.cssText = "v\\:rect, v\\:roundrect, v\\:line, v\\:polyline, v\\:curve, v\\:arc, v\\:oval, v\\:image, v\\:shape, v\\:group, v\\:skew, v\\:stroke, v\\:fill { behavior:url(#default#VML); display:inline-block }";
 
 		}
 		

@@ -1,3 +1,2 @@
-build/sass/.sass-cache/*
-public/client-javascript/*.js
-server.js
+debug/planet.js
+dist/planet.min.js

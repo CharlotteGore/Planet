@@ -23,38 +23,72 @@ describe("Planet#Intro", function(){
 		expect(surface).toBeDefined();
 		expect(surface.path).toBeDefined();
 		expect(typeof surface).toEqual('object');
+		
+		if(planet.canvasSupported && planet.svgSupported){
+			expect(surface.mode).toEqual('canvas');
+		}
+		
+		if(planet.vmlSupported){
+			expect(surface.mode).toEqual('vml');
+		}
+		
+		if(!planet.canvasSupported && !planet.vmlSupported && planet.svgSupported){
+			expect(surface.mode).toEqual('svg');
+		}
 	});
 	
-	it("can initialise VML mode (forced)", function(){
-		
-		var surface = planet('#drawing-surface', "vml");
-		
-		expect(surface).toBeDefined();
-		expect(typeof surface).toEqual('object');
-		expect(surface.path).toBeDefined();
-		expect(surface.mode).toEqual("vml");
+	it("holds variables for which modes are supported", function(){
+	
+		expect(planet.vmlSupported).toBeDefined();
+		expect(planet.svgSupported).toBeDefined();
+		expect(planet.canvasSupported).toBeDefined();
 	
 	});
 	
-	it("can initialise SVG mode (forced)", function(){
-		
-		var surface = planet('#drawing-surface', "svg");
-		
-		expect(surface).toBeDefined();
-		expect(typeof surface).toEqual('object');
-		expect(surface.path).toBeDefined();
-		expect(surface.mode).toEqual("svg");
+	if(planet.svgSupported){
 	
-	});
-	
-	it("can initialise Canvas mode (forced)", function(){
+		it("can initialise SVG mode (forced)", function(){
 		
-		var surface = planet('#drawing-surface', "canvas");
-		
-		expect(surface).toBeDefined();
-		expect(typeof surface).toEqual('object');
-		expect(surface.path).toBeDefined();
-		expect(surface.mode).toEqual("canvas");
+			var surface = planet('#drawing-surface', "svg");
+			
+			expect(surface).toBeDefined();
+			expect(typeof surface).toEqual('object');
+			expect(surface.path).toBeDefined();
+			expect(surface.mode).toEqual("svg");
 	
-	});
+		});
+
+	}
+	
+	if(planet.vmlSupported){
+	
+		it("can initialise VML mode (forced)", function(){
+		
+			var surface = planet('#drawing-surface', "vml");
+			
+			expect(surface).toBeDefined();
+			expect(typeof surface).toEqual('object');
+			expect(surface.path).toBeDefined();
+			expect(surface.mode).toEqual("vml");
+		
+		
+		});
+	
+	}
+	
+	if(planet.canvasSupported){
+	
+		it("can initialise Canvas mode (forced)", function(){
+		
+			var surface = planet('#drawing-surface', "canvas");
+			
+			expect(surface).toBeDefined();
+			expect(typeof surface).toEqual('object');
+			expect(surface.path).toBeDefined();
+			expect(surface.mode).toEqual("canvas");
+		
+		});
+	
+	}
+	
 });

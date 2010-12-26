@@ -147,8 +147,8 @@
 				canvas = document.createElement("canvas");
 				
 				$(canvas)
-					.attr('height', height)
-					.attr('width', width);
+					.attr('height', container.height())
+					.attr('width', container.width());
 				
 				container.append(canvas);
 				
@@ -157,6 +157,23 @@
 				this.mode = "canvas";
 				return this;
 			}
+		},
+		getSupportedMethods : function(){
+			var methods = [];
+			
+			if(isVMLSupported){
+				methods.push("vml");
+			}
+			
+			if(isSVGSupported){
+				methods.push("svg");
+			}
+			
+			if(isCanvasSupported){
+				methods.push("canvas");
+			}
+			
+			return methods;
 		}
 	});
 	

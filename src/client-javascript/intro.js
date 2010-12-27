@@ -13,9 +13,11 @@
 	// Bunch of helper functions to detect browser functionality...
 	
 	// VML..
+	
+	/*
 		var isVMLSupported = function(){
 		
-		var a, b, doesSupport;
+		var a, b, doesSupport, headElement, styleElement, HTMLTagRef;
 		
 		a = document.createElement('div');
 		a.innerHTML = '<v:shape id="vml_flag1" adj="1" />';
@@ -30,11 +32,16 @@
 		$('body').remove(a);
 		
 		if(doesSupport){
-				var headElement = document.getElementsByTagName("head")[0],
+				headElement = document.getElementsByTagName("head")[0];
 				styleElement = document.createElement("style");
 				styleElement.type = "text/css";
 				headElement.appendChild(styleElement);
 				styleElement.styleSheet.cssText = "v\\:rect, v\\:roundrect, v\\:line, v\\:polyline, v\\:curve, v\\:arc, v\\:oval, v\\:image, v\\:shape, v\\:group, v\\:skew, v\\:stroke, v\\:fill { behavior:url(#default#VML); display:inline-block }";
+
+				HtmlTagRef = document.getElementsByTagName('HTML')[0];
+				HtmlTagRef.setAttribute('xmlns:v','urn:schemas-microsoft-com:vml');
+				
+				document.namespaces.add("v","urn:schemas-microsoft-com:vml");
 
 		}
 		
@@ -52,29 +59,69 @@
 		return !!(elem.getContext && elem.getContext('2d'));
 	}(),
 	
-	// Manual Forcing (mostly to deliberately choose SVG over Canvas, or for Unit testing purposes)
-	isForcedMode = function(){
-		return window.forcePlanetMode;
-	}(),
+	*/
+	
+	var supportedModes = {
+		vml : function(){
+		
+			var a, b, doesSupport, headElement, styleElement, HTMLTagRef;
+			
+			a = document.createElement('div');
+			a.innerHTML = '<v:shape id="vml_flag1" adj="1" />';
+			b = a.firstChild;
+			
+			$('body').append(a);
+			
+			b.style.behavior = "url(#default#VML)";
+			
+			doesSupport = b ? typeof b.adj == "object": true;
+			
+			$('body').remove(a);
+			
+			if(doesSupport){
+					headElement = document.getElementsByTagName("head")[0];
+					styleElement = document.createElement("style");
+					styleElement.type = "text/css";
+					headElement.appendChild(styleElement);
+					styleElement.styleSheet.cssText = "v\\:rect, v\\:roundrect, v\\:line, v\\:polyline, v\\:curve, v\\:arc, v\\:oval, v\\:image, v\\:shape, v\\:group, v\\:skew, v\\:stroke, v\\:fill { behavior:url(#default#VML); display:inline-block }";
+	
+					HtmlTagRef = document.getElementsByTagName('HTML')[0];
+					HtmlTagRef.setAttribute('xmlns:v','urn:schemas-microsoft-com:vml');
+					
+					document.namespaces.add("v","urn:schemas-microsoft-com:vml");
+	
+			}
+			
+			return doesSupport;
+		}(),
+		svg : function(){
+			return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
+		}(),
+		canvas : function(){
+			var elem = document.createElement('canvas');
+			return !!(elem.getContext && elem.getContext('2d'));
+		}()
+	},
 	
 	planet;
 	
 	planet = function( selector, mode ){
+		// selects VML, VML not supported: Try Canvas, then SVG, then abort
+		// selects SVG, SVG not supported: Try VML, then Canvas, then abort
+		// selects Canvas, Canvas not supported: Try VML, then SVG, then abort.
 		
-		if(!mode){
-			if(isCanvasSupported){
-				mode = "canvas";
-			}else if(isVMLSupported){
-				mode = "vml";
-			}else if(isSVGSupported){
-				mode = "svg";
-			}
-		}
+		var priority = ["canvas","svg","vml"], i, il;
 		
-		try{
+		if(mode && supportedModes[mode]){
 			return new planet[mode].init( selector );
-		}catch(e){
-			throw(e);
+		}else{
+			for(i = 0, il = priority.length; i < il ;i++){
+			
+				if(supportedModes[priority[i]]){
+					return new planet[priority[i]].init( selector );
+				}
+			
+			}
 		}
 	};
 	

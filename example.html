@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:v="urn:schemas-microsoft-com:vml">
+      <head>
+      <title>Planet Sandbox</title>
+      <script type="text/javascript" src="lib/jquery.min.js"></script>
+      <script type="text/javascript" src="debug/planet.js"></script>
+      <link rel="stylesheet" href="css/style.css" type="text/css" />
+      
+      </head>
+      <body>
+      <div id="drawing-surface" style="width:500px;height:500px;"></div>
+      <script type="text/javascript">
+      	$(document).ready(function(){
+
+  		   	planet('#drawing-surface', "canvas")
+  				.line({x1 : 0, y1 : 0, x2 : 100, y2 : 100, color : "#45D", strokeWidth : 1})
+  				.line({x1 : 100, y1 : 100, x2 : 90, y2: 100, color : "#45D", strokeWidth : 1})
+  				.line({x1 : 100, y1 : 100, x2 : 100, y2: 90, color : "#45D", strokeWidth : 1});
+
+      	});
+      </script>
+      </body>
+      </html>

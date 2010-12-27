@@ -1,2 +1,3 @@
 /* VML Styles */
 #drawing-surface {width:500px;height:500px;position:relative;margin:0;padding:0}
+#drawing-surface canvas {width:500px;height:500px}

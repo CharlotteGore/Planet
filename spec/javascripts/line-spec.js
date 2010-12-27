@@ -10,7 +10,7 @@ describe("Planet#Line", function(){
 			y1 : 0,
 			x2 : 100,
 			y2 : 100,
-			color : "#000",
+			strokeColor : "#000",
 			strokeWidth : 2
 		};
 	});
@@ -31,7 +31,7 @@ describe("Planet#Line", function(){
 				var contents = $($('#drawing-surface').html());
 				
 				// draw one line...
-				expect(contents.find('line').length).toEqual(1);
+				expect(contents.find('path').length).toEqual(1);
 
 				// Every browser implementation is different, impossible to reliably test the values of x1, y1 etc. Testing has to be done with Eyes.
 			

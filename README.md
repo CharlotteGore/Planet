@@ -6,18 +6,18 @@ Introduction
 
 A minimalist cross-browser library for drawing basic vector graphics in either Canvas, SVG or VML.
 
-Priority is Canvas, then SVG, then VML. In practice, it's Canvas for decent browsers, VML for IE.
+When choosing a rendering mode, the priority is Canvas, then SVG, then VML. In practice for modern browsers, it's Canvas for decent browsers, VML for IE.
 
 Implemented
 -----------
 
-Lines. You can draw lines. Be still your beating heart.
+Lines and Paths. This pretty much allows you to draw arbitrary shapes to the screen, with a single fill and/or stroke colour.
 
 
 Priorities
 ----------
 
-Utterly cross-platform, feature detectin' (not browser sniffin'), lightweight, simple interface, easy to deploy and use.
+Utterly cross-platform, feature detectin' (not browser sniffin'), lightweight (currently 5k compiled and minified), fast, simple interface, easy to deploy and use.
 
 Dependencies
 ------------
@@ -56,8 +56,22 @@ Usage
 		y1 : 0,
 		x2 : 100,
 		y2 : 100,
-		color : "#000",
-		strokeWidth : 3
+		strokeColor : "#000", // defaults to black if you leave out a strokeColor property
+		strokeWidth : 3 // defaults to 1 if you leave out the strokeWidth property
+	});
+	
+	container.path({
+		startx : 0,
+		starty : 0,
+		points : [
+			{x : 100, 0},
+			{x : 100, 100},
+			{x : 50, 50}
+		],
+		close : false // don't automatically 'close' the path, i.e, returning to the origin. Ignored if you apply a fill color. 
+		fillColor : "#000" // no fill colour property, no fill.
+		strokeColor : "#333" // no stroke colour property, no stroke.
+		strokeWidth : 2 // defaults to 1 if you leave out the strokeWidth property
 	});
 
 or you can chain instructions...
@@ -65,7 +79,7 @@ or you can chain instructions...
 	planet('#container')
 		.line( obj )
 		.line( obj )
-		.line( obj ) ...
+		.path( obj ) ...
 	
 etc.
 
@@ -74,10 +88,9 @@ Pretty simple at the moment. Documentation will be extended as more methods are 
 Roadmap
 -------
 
-Paths
-Boxes (with and without rounded edges)
-Ovals and Circles
-Lightweight JSON platform neutral Vector Graphic definition format.
+* Ovals and Circles
+* 'Boxes' (with and without rounded edges)
+* Lightweight JSON platform neutral Vector Graphic definition format.
 
 Author
 ------

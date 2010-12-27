@@ -27,23 +27,23 @@ jQuery. It's used for DOM manipulation and CSS3 selectors.
 Usage
 -----
 
-`var container = planet('#graphics-container');`
+{var container = planet('#graphics-container');}
 
-`container.line({
+{container.line({
 	x1 : 0,
 	y1 : 0,
 	x2 : 100,
 	y2 : 100,
 	color : "#000",
 	strokeWidth : 3
-});`
+});}
 
 or you can chain instructions...
 
-`planet('#container')
+{planet('#container')
 	.line( obj )
 	.line( obj )
-	.line( obj ) ...`
+	.line( obj ) ...}
 	
 etc.
 

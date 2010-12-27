@@ -11,11 +11,11 @@ describe("Pathways#Basic dependencies", function() {
 describe("Planet#Intro", function(){
 
 	beforeEach(function(){
-		$('body').append('<div id="drawing-surface"></div>');
+		$('body').append('<div id="drawing-surface" style="width:500px;height:500px"></div>');
 	});
 	
 	afterEach(function(){
-		$('#map-test').remove();
+		$('#drawing-surface').remove();
 	});
 	
 	it("initialises properly", function(){
@@ -47,7 +47,7 @@ describe("Planet#Intro", function(){
 	
 	if(planet.svgSupported){
 	
-		it("can initialise SVG mode (forced)", function(){
+		it("can initialise SVG mode (forced & supported)", function(){
 		
 			var surface = planet('#drawing-surface', "svg");
 			
@@ -62,7 +62,7 @@ describe("Planet#Intro", function(){
 	
 	if(planet.vmlSupported){
 	
-		it("can initialise VML mode (forced)", function(){
+		it("can initialise VML mode (forced & supported)", function(){
 		
 			var surface = planet('#drawing-surface', "vml");
 			
@@ -78,7 +78,7 @@ describe("Planet#Intro", function(){
 	
 	if(planet.canvasSupported){
 	
-		it("can initialise Canvas mode (forced)", function(){
+		it("can initialise Canvas mode (forced & supported)", function(){
 		
 			var surface = planet('#drawing-surface', "canvas");
 			
@@ -90,5 +90,37 @@ describe("Planet#Intro", function(){
 		});
 	
 	}
+	
+	if(planet.canvasSupported && !planet.vmlSupported){
+	
+		it("VML not supported, will initialise Canvas instead (when supported)", function(){
+		
+			var surface = planet('#drawing-surface', "vml");
+			
+			expect(surface).toBeDefined();
+			expect(typeof surface).toEqual('object');
+			expect(surface.path).toBeDefined();
+			expect(surface.mode).toEqual("canvas");
+		
+		});
+	
+	}
+	
+	if(planet.vmlSupported && !planet.canvasSupported && !planet.svgSupported){
+	
+		it("Canvas & SVG not supported, will initialise VML even when 'forced' into Canvas mode", function(){
+		
+			var surface = planet('#drawing-surface', "canvas");
+			
+			expect(surface).toBeDefined();
+			expect(typeof surface).toEqual('object');
+			expect(surface.path).toBeDefined();
+			expect(surface.mode).toEqual("canvas");
+		
+		});
+	
+	}
+	
+	
 	
 });

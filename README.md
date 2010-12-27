@@ -22,7 +22,29 @@ Utterly cross-platform, feature detectin' (not browser sniffin'), lightweight, s
 Dependencies
 ------------
 
-jQuery. It's used for DOM manipulation and CSS3 selectors.
+jQuery. It's used for DOM manipulation and CSS3 selectors. To build you'll need Ruby, (let's say 1.9.2, to be sure), Ruby Gems, Rake and Java. To run the specs you'll need Jasmine. Google Closure Compiler, JSlint and Rhino are in the repository already.
+
+Building
+--------
+
+	git clone git@github.com:CharlotteGore/Planet.git
+	
+	cd planet
+
+	rake
+
+The minified version goes in dist/planet.min.js, the debug version in debug/planet.js. 
+
+Tests
+-----
+
+	rake jasmine
+	
+or
+
+	rake jasmine:ci
+	
+You'll need the Ruby gem 'jasmine' to run the specs.
 
 Usage
 -----

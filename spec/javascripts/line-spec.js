@@ -78,14 +78,10 @@ describe("Planet#Line", function(){
 				var surface = planet('#drawing-surface', "vml");
 				surface.line(line);
 				
-				var contents = $($('#drawing-surface').html());
+				var contents = $('#drawing-surface').html();
 				
-				
-				// 4 * x * y
-				expect(contents.find('v:line').length).toEqual(1);
-				expect(contents.find('v:line').attr('from')).toEqual("0px, 0px");
-				
-				// draw one line...
+				expect(contents).toEqual('<v:line from = "0,0" to = "75pt,75pt" filled = "f" strokecolor = "black" strokeweight = "1.5pt"></v:line>');
+
 			});
 			
 		

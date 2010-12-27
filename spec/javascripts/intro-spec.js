@@ -115,7 +115,7 @@ describe("Planet#Intro", function(){
 			expect(surface).toBeDefined();
 			expect(typeof surface).toEqual('object');
 			expect(surface.path).toBeDefined();
-			expect(surface.mode).toEqual("canvas");
+			expect(surface.mode).toEqual("vml");
 		
 		});
 	

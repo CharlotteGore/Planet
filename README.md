@@ -69,8 +69,8 @@ Usage
 			{x : 50, 50}
 		],
 		close : false // don't automatically 'close' the path, i.e, returning to the origin. Ignored if you apply a fill color. 
-		fillColor : "#000" // no fill colour property, no fill.
-		strokeColor : "#333" // no stroke colour property, no stroke.
+		fillColor : "#000", // no fill colour property, no fill.
+		strokeColor : "#333", // no stroke colour property, no stroke.
 		strokeWidth : 2 // defaults to 1 if you leave out the strokeWidth property
 	});
 

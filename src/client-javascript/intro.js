@@ -14,53 +14,6 @@
 	
 	// VML..
 	
-	/*
-		var isVMLSupported = function(){
-		
-		var a, b, doesSupport, headElement, styleElement, HTMLTagRef;
-		
-		a = document.createElement('div');
-		a.innerHTML = '<v:shape id="vml_flag1" adj="1" />';
-		b = a.firstChild;
-		
-		$('body').append(a);
-		
-		b.style.behavior = "url(#default#VML)";
-		
-		doesSupport = b ? typeof b.adj == "object": true;
-		
-		$('body').remove(a);
-		
-		if(doesSupport){
-				headElement = document.getElementsByTagName("head")[0];
-				styleElement = document.createElement("style");
-				styleElement.type = "text/css";
-				headElement.appendChild(styleElement);
-				styleElement.styleSheet.cssText = "v\\:rect, v\\:roundrect, v\\:line, v\\:polyline, v\\:curve, v\\:arc, v\\:oval, v\\:image, v\\:shape, v\\:group, v\\:skew, v\\:stroke, v\\:fill { behavior:url(#default#VML); display:inline-block }";
-
-				HtmlTagRef = document.getElementsByTagName('HTML')[0];
-				HtmlTagRef.setAttribute('xmlns:v','urn:schemas-microsoft-com:vml');
-				
-				document.namespaces.add("v","urn:schemas-microsoft-com:vml");
-
-		}
-		
-		return doesSupport;
-	}(),
-	
-	// SVG...
-	isSVGSupported = function(){
-		 return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
-	}(),
-	
-	// Canvas...
-	isCanvasSupported = function(){
-		var elem = document.createElement('canvas');
-		return !!(elem.getContext && elem.getContext('2d'));
-	}(),
-	
-	*/
-	
 	var supportedModes = {
 		vml : function(){
 		

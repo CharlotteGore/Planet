@@ -20,7 +20,7 @@
   				.line({x1 : 100, y1 : 100, x2 : 100, y2: 90, strokeColor : "#45D", strokeWidth : 1});
   				*/
 
-			
+			/*			
 			planet('#drawing-surface', "canvas")
 				.path({
 					startx : 0,
@@ -31,11 +31,23 @@
 						{x : 50, y: 50}
 					],
 					strokeColor : "#45D",
-					/* fillColor : "#287", */
+					// fillColor : "#287",
 					strokeWidth : 1,
 					close : false
 				});
 			
+			*/
+			
+			planet('#drawing-surface', "svg")
+				.box({
+					position : {x : 0, y : 0},
+					size : {w : 200, h : 100},
+					cornerRadius: 25,
+					strokeColor : "#333",
+					fillColor : "#eee",
+					strokeWidth : 1
+					
+				});
 			
 
       	});

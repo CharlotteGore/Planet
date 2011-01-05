@@ -1,33 +1,5 @@
 
-	planet.extend({
-		getAlignment : function(obj){
-			
-			if(obj.direction==="left" || obj.direction==="right"){
-				obj.align = 0;
-			}else{
-				obj.align = 1;
-			}
-			return;
-		}
-	});
-
-	// Path drawing functions
-	
-	planet.vml.extend({
-	
-		elbow : function( obj ){
-		
-			// Do nothing.
-
-			
-			return this;
-		
-		
-		}
-	
-	});
-	
-	planet.svg.extend({
+	var elbow = {
 	
 		elbow : function( obj ){
 		
@@ -123,16 +95,24 @@
 			return this;
 		
 		}
-	});
-	
-	planet.canvas.extend({
-	
-		elbow : function( obj ){
-		
-			// Do Nothing
+	};
+
+	planet.extend({
+		getAlignment : function(obj){
 			
-			return this;
-		
+			if(obj.direction==="left" || obj.direction==="right"){
+				obj.align = 0;
+			}else{
+				obj.align = 1;
+			}
+			return;
 		}
-		
 	});
+
+	// Path drawing functions
+	
+	planet.vml.extend(elbow);
+	
+	planet.svg.extend(elbow);
+	
+	planet.canvas.extend(elbow);

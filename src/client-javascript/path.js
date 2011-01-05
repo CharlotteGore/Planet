@@ -9,7 +9,12 @@
 			
 			var strokeColor = "", strokeWeight = "", fillColor = "", path = "", width = this.container.width(), height = this.container.height(), i, il, style;
 			
-			style = 'style="position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;"';
+			var vEl = document.createElement('v:shape');
+			
+			vEl.setAttribute('style','position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;');
+			vEl.setAttribute('coordorigin', '0 0');
+			vEl.setAttribute('coordsize', width + ' ' + height);
+			//style = 'style="position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;"';
 			
 			path = 'm '+obj.startx+','+obj.starty+' ';
 			
@@ -18,18 +23,21 @@
 			}
 			
 			if(obj.strokeColor){
-				strokeColor = 'strokecolor="' + obj.strokeColor + '"';
-				strokeWeight = "strokeweight=" + (obj.strokeWidth ? (obj.strokeWidth) : 1);
+				vEl.setAttribute('strokecolor', obj.strokeColor);
+				//strokeColor = 'strokecolor="' + obj.strokeColor + '"';
+				vEl.setAttribute('strokeweight', (obj.strokeWidth ? (obj.strokeWidth) : 1));
+				//strokeWeight = "strokeweight=" + (obj.strokeWidth ? (obj.strokeWidth) : 1);
 			}
 			
 			if(close===true || obj.fillColor){
-				fillColor = 'fillcolor="' + obj.fillColor + '"';
+				vEl.setAttribute('fillcolor', obj.fillColor);
+				//fillColor = 'fillcolor="' + obj.fillColor + '"';
 				path += ' x e';
 			}
 			
-			var html = '<v:shape ' + strokeColor +' coordorigin="0 0" coordsize="'+width+' '+height+'" ' + style + ' path="' + path + '"></v:shape>';
+			vEl.setAttribute('path', path);
 			
-			this.container.append(html);
+			this.container.append(vEl);
 
 			
 			return this;

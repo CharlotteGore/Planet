@@ -3,98 +3,91 @@
 	
 		elbow : function( obj ){
 		
-			var cornerA = {}, cornerB = {};
+			var cornerA = {}, cornerB = {}, singleLine = false, json;
 		
 			planet.getAlignment(obj.origin);
 			planet.getAlignment(obj.target);
+			
+			json = {
+				startx : obj.origin.x,
+				starty : obj.origin.y
+				//strokeColor : obj.strokeColor || "#000",
+				//strokeWidth : obj.strokeWidth || 1
+			};
 		
 			if(obj.origin.align===obj.target.align){
 			
 				if(obj.origin.align===1){
-					// horizontal to horizontal
-					var midY = obj.origin.y + ((obj.target.y - obj.origin.y) / 2);
-					// vertical to vertical
 					
-					cornerA = {
-						x : obj.origin.x,
-						y : midY
-					};
+						if(obj.origin.x === obj.target.x){
+							json.points = [
+								{ x : obj.target.x, y : obj.target.y }
+							];
+							
+						}else{
+							
+							var midY = Math.floor(obj.origin.y + ((obj.target.y - obj.origin.y) / 2));
+							// vertical to vertical
+							
+							json.points = [
+								{ x : obj.origin.x, y : midY },
+								{ x : obj.target.x, y : midY },
+								{ x : obj.target.x, y : obj.target.y }
+							];
+							
+						
+						}
 					
-					cornerB = {
-						x : obj.target.x,
-						y : midY
-					};
+					
 				
 				}else{
-					// vertical to vertical 
-					var midX = obj.origin.x + ((obj.target.x - obj.origin.x) / 2);
-					
-					cornerA = {
-						x : midX,
-						y : obj.origin.y
-					};
-					
-					cornerB = {
-						x : midX,
-						y : obj.target.y
-					};
-				
-					
+					 
+					if(obj.origin.y === obj.target.y){
+							json.points = [
+								{ x : obj.target.x, y : obj.target.y }
+							];
+					} else {
+					 
+						var midX = Math.floor(obj.origin.x + ((obj.target.x - obj.origin.x) / 2));
+						
+						json.points = [
+							{ x : midX, y : obj.origin.y},
+							{ x : midX, y : obj.origin.y },
+							{ x : obj.target.x, y : obj.target.y }
+						];
+							
+					}
 					
 				}
-				// down/up to left/right = { x : obj.origin.x, y : obj.target.y },
-			
-				// right angle elbow
-				this.path({
-					startx : obj.origin.x,
-					starty : obj.origin.y,
-					points : [
-						{ x : cornerA.x, y : cornerA.y },
-						{ x : cornerB.x, y : cornerB.y },
-						{ x : obj.target.x, y : obj.target.y }
-					],
-					strokeColor : obj.strokeColor || "#000",
-					strokeWidth : obj.strokeWidth || 1
-				});
 			
 			}else{
 			
 				if(obj.origin.align===1){
 					// vertical to horizontal
-					cornerA = {
-						x : obj.origin.x,
-						y : obj.target.y
-					};
-				
-				}else{
+					json.points = [
+						{ x : obj.origin.x, y : obj.target.y},
+						{ x : obj.target.x, y : obj.target.y }
+					];
+					
+				}else{ 
 					// horizontal to vertical
-					cornerA = {
-						x : obj.target.x,
-						y : obj.origin.y
-					};
+					json.points = [
+						{ x : obj.target.x, y : obj.origin.y},
+						{ x : obj.target.x, y : obj.target.y }
+					];
 					
 				}
 				// down/up to left/right = { x : obj.origin.x, y : obj.target.y },
 			
-				// right angle elbow
-				this.path({
-					startx : obj.origin.x,
-					starty : obj.origin.y,
-					points : [
-						{ x : cornerA.x, y : cornerA.y },
-						{ x : obj.target.x, y : obj.target.y }
-					],
-					strokeColor : obj.strokeColor || "#000",
-					strokeWidth : obj.strokeWidth || 1
-				});
-			
 			}
 			
-			//obj.origin.align === obj.target.align ? alert("S bend") : alert("Right angle");
+			this.path(json);
 			
+			//obj.origin.align === obj.target.align ? alert("S bend") : alert("Right angle");
 			return this;
 		
 		}
+		
 	};
 
 	planet.extend({

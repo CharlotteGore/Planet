@@ -7,33 +7,40 @@
 		
 			// This is where it starts to get fookin' hard.
 			
-			var strokeColor = "", strokeWeight = "", fillColor = "", path = "", width = this.container.width(), height = this.container.height(), i, il, style;
+			var path = "", width = this.container.width(), height = this.container.height(), i, il;
 			
 			var vEl = document.createElement('v:shape');
 			
-			vEl.setAttribute('style','position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;');
-			vEl.setAttribute('coordorigin', '0 0');
-			vEl.setAttribute('coordsize', width + ' ' + height);
-			//style = 'style="position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;"';
-			
-			path = 'm '+obj.startx+','+obj.starty+' ';
+			$(vEl).attr('style', 'position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;' );
+			$(vEl).attr('coordorigin', '0 0');
+			$(vEl).attr('coordsize', width + ' ' + height);
+
+			path = 'm '+Math.floor(obj.startx)+','+Math.floor(obj.starty)+' ';
 			
 			for(i = 0, il = obj.points.length; i < il ; i++){
-				path += 'l '+obj.points[i].x+','+obj.points[i].y + ' ';
+				path += 'l '+Math.floor(obj.points[i].x)+','+Math.floor(obj.points[i].y) + ' ';
 			}
 			
-			if(obj.strokeColor){
-				vEl.setAttribute('strokecolor', obj.strokeColor);
-				//strokeColor = 'strokecolor="' + obj.strokeColor + '"';
-				vEl.setAttribute('strokeweight', (obj.strokeWidth ? (obj.strokeWidth) : 1));
-				//strokeWeight = "strokeweight=" + (obj.strokeWidth ? (obj.strokeWidth) : 1);
-			}
-			
-			if(close===true || obj.fillColor){
-				vEl.setAttribute('fillcolor', obj.fillColor);
-				//fillColor = 'fillcolor="' + obj.fillColor + '"';
+			vEl.setAttribute('strokecolor', this.pen.strokeColor);
+			vEl.setAttribute('strokeweight', this.pen.strokeWidth);
+
+			if(this.pen.fillType !== "none" || obj.close===true){
+
 				path += ' x e';
+			
+				if(this.pen.fillType === "fill"){
+					
+					vEl.setAttribute('fillcolor', this.pen.fillColor);
+			
+				}else if(this.pen.fillType === "gradient"){
+					// do nothing yet
+				}
+			}else {
+			
+				vEl.setAttribute('filled', 'False');
+				
 			}
+			
 			
 			vEl.setAttribute('path', path);
 			
@@ -59,27 +66,23 @@
 
 			var shape = document.createElementNS(this.svgNS, "path");
 			
-			if(obj.close || obj.fillColor){
+			if(this.pen.fillType !== "none" || obj.close===true){
 				d += "Z";
-			}
-			
-			if(obj.fillColor){
-			
-				shape.setAttributeNS(null, "fill", obj.fillColor);
-			
-			}else{
+				
+				if(this.pen.fillType === "fill"){
+					shape.setAttributeNS(null, "fill", this.pen.fillColor);
+				}else if(this.pen.fillType === "gradient"){
+					// do nothing yet
+				}
+			}else {
 			
 				shape.setAttributeNS(null, "fill", "none");
-			
+				
 			}
 			
-			if(obj.strokeColor){
-				shape.setAttributeNS(null, "stroke", (obj.strokeColor ? obj.strokeColor : "#000"));
-				shape.setAttributeNS(null, "stroke-width", (obj.strokeWidth ? obj.strokeWidth : 1) + "px");	
-			}else{
-				shape.setAttributeNS(null, "stroke", "none");
-			}
 			
+			shape.setAttributeNS(null, "stroke", this.pen.strokeColor);
+			shape.setAttributeNS(null, "stroke-width", (this.pen.strokeWidth + 1) + "px");	
 			
 			shape.setAttributeNS(null, "d", d);
 			

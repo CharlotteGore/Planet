@@ -3,11 +3,15 @@
 	planet.vml.extend({
 	
 		box : function( obj ){
-			// This is where it starts to get really really fookin' hard.
+
+			var path = "", px = [], py = [], p, vEl, width = this.container.width(), height = this.container.height(), i, il;
 			
-			var strokeColor = "", strokeWeight = "", fillColor = "", path = "", width = this.container.width(), height = this.container.height(), i, il, style, r, px = [], py = [];
+			vEl = document.createElement('v:shape');
 			
-			style = 'style="position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;"';
+			$(vEl).attr('style', 'position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;' );
+			$(vEl).attr('coordorigin', '0 0');
+			$(vEl).attr('coordsize', width + ' ' + height);
+			//style = 'style="position: absolute; top: 0; left: 0; width:' + width + 'px; height: ' + height + 'px;"';
 			
 			px[0] = obj.position.x;
 			px[3] = px[0] + obj.size.w;
@@ -21,12 +25,7 @@
 				px[2] = px[3] - obj.cornerRadius;
 				py[1] = py[0] + obj.cornerRadius;
 				py[2] = py[3] - obj.cornerRadius;
-				/*
-				path += "m " + px[1] + " " + py[0] + " ";
-				path += "ae " + 
-				
-				*/
-				
+		
 				path += "m " + px[1] + " " + py[0] + " ";
 				path += "l " + px[2] + " " + py[0] + " ";
 				path += "qx " + px[3] + " " + py[1] + " ";
@@ -36,18 +35,6 @@
 				path += "qx " + px[0] + " " + py[2] + " ";
 				path += "l " + px[0] + " " + py[1] + " ";
 				path += "qy " + px[1] + " " + py[0] + " ";
-				
-				/*
-				path += "m 25 0 l 75 0 ";
-				path += "qx 100 25 l 100 75 ";
-				*/
-				/*
-				path += "ae 75 25 25 25 0 90 ";
-				path += "ae 75 75 25 25 90 180 ";
-				path += "ae 25 75 25 25 180 270 ";
-				path += "ae 25 25 25 25 270 360 X E";
-				*/
-			
 			
 			}else{
 			
@@ -58,29 +45,28 @@
 				path += "l " + px[0] +" " + py[0] + " ";
 			
 			}
-			/*
-			path = 'm '+obj.startx+','+obj.starty+' ';
 			
-			for(i = 0, il = obj.points.length; i < il ; i++){
-				path += 'l '+obj.points[i].x+','+obj.points[i].y + ' ';
-			}
-			*/
-			if(obj.strokeColor){
-				strokeColor = 'strokecolor="' + obj.strokeColor + '"';
-				strokeWeight = "strokeweight=" + (obj.strokeWidth ? (obj.strokeWidth) : 1);
-			}
+			$(vEl).attr('strokecolor', this.pen.strokeColor);
+			$(vEl).attr('strokeweight', this.pen.strokeWidth);
 			
-			if(close===true || obj.fillColor){
-				fillColor = 'fillcolor="' + obj.fillColor + '"';
-				//path += ' x e';
+			
+			if(close===true || this.pen.fillColor !== "none"){
+				path += ' x e';
+				$(vEl).attr('fillcolor', this.pen.fillColor);
+
+				var fill = document.createElement('v:fill');
+				//$(fill).attr()
+			}else{
+				
 			}
 			
-			//var html = '<v:shape ' + strokeColor +' coordorigin="0 0" coordsize="'+width+' '+height+'" ' + style + ' path="' + path + '"></v:shape>';
-			var html = '<v:shape ' + strokeColor +' ' + fillColor +' coordorigin="0 0" coordsize="'+width+' '+height+'" ' + style + ' path="' + path + '"></v:shape>';
+			$(vEl).attr('path', path);
 			
-			this.container.append(html);
-		
+			this.container.append(vEl);
+
+			
 			return this;
+			
 		}
 	
 	});
@@ -128,27 +114,21 @@
 
 			var shape = document.createElementNS(this.svgNS, "path");
 			
-			
-			if(obj.close || obj.fillColor){
+			if(this.pen.fillType !== "none" || obj.close===true){
 				d += "Z";
-			}
-			
-			if(obj.fillColor){
-			
-				shape.setAttributeNS(null, "fill", obj.fillColor);
-			
-			}else{
+				
+				if(this.pen.fillType === "fill"){
+					shape.setAttributeNS(null, "fill", this.pen.fillColor);
+				}else if(this.pen.fillType === "gradient"){
+					// Oh no!!! SVG gradients are an evil bastard from hell!!!
+				}
+			}else {
 			
 				shape.setAttributeNS(null, "fill", "none");
-			
+				
 			}
-			
-			if(obj.strokeColor){
-				shape.setAttributeNS(null, "stroke", (obj.strokeColor ? obj.strokeColor : "#000"));
-				shape.setAttributeNS(null, "stroke-width", (obj.strokeWidth ? obj.strokeWidth : 1) + "px");	
-			}else{
-				shape.setAttributeNS(null, "stroke", "none");
-			}
+			shape.setAttributeNS(null, "stroke", this.pen.strokeColor);
+			shape.setAttributeNS(null, "stroke-width", (this.pen.strokeWidth + 1) + "px");
 			
 			
 			shape.setAttributeNS(null, "d", d);

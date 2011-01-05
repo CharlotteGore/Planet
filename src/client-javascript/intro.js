@@ -108,11 +108,26 @@
 	};	
 	
 	planet.extend({
+		defaultPen : {
+					strokeType : "none",
+					fillType : "none",
+					strokeWeight : 1,
+					strokeColor : "#000",
+					fillColor : "#000",
+					gradientColor1 : "#000",
+					gradientColor2 : "#FFF"
+		},
+	
 		vml : {
 			init : function( selector ){
 			
 				this.container = $(selector);
 				this.mode = "vml";
+				
+				this.pen = {};
+				this.pen.extend = planet.extend;
+				this.pen.extend(planet.defaultPen);
+				
 				return this;
 			}
 		},
@@ -137,6 +152,10 @@
 				container.append(this.container);
 				
 				this.mode = "svg"; 
+				
+				this.pen = {};
+				this.pen.extend = planet.extend;
+				this.pen.extend(planet.defaultPen);
 				return this;
 			}
 		},
@@ -155,6 +174,11 @@
 				this.container = canvas.getContext('2d');
 				
 				this.mode = "canvas";
+				
+				this.pen = {};
+				this.pen.extend = planet.extend;
+				this.pen.extend(planet.defaultPen);
+				
 				return this;
 			}
 		},
@@ -185,4 +209,20 @@
 	// hook extend into the various prototypes
 	planet.svg.extend = planet.canvas.extend = planet.vml.extend = planet.extend;	
 
+	var setDrawAttributes = {
+		setDrawAttributes : function( obj ){
+			/*
+			if(!this.pen){
+				this.pen = {};
+			}
+			if(!this.pen.extend){
+				this.pen.extend = planet.extend;
+			}*/
+			this.pen.extend( obj );
+		}
+	};
+	
+	planet.vml.extend(setDrawAttributes);
+	planet.svg.extend(setDrawAttributes);
+	planet.canvas.extend(setDrawAttributes);
  

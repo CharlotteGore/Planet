@@ -16,20 +16,37 @@
 			py[3] = py[0] + obj.size.h;
 			
 			if(obj.cornerRadius){
-				/*
+				
 				px[1] = px[0] + obj.cornerRadius;
 				px[2] = px[3] - obj.cornerRadius;
 				py[1] = py[0] + obj.cornerRadius;
 				py[2] = py[3] - obj.cornerRadius;
-			
+				/*
 				path += "m " + px[1] + " " + py[0] + " ";
 				path += "ae " + 
 				
 				*/
 				
-				path += "m 25 0 ";
-				path += "ae 75,25 50,50 0 90";
+				path += "m " + px[1] + " " + py[0] + " ";
+				path += "l " + px[2] + " " + py[0] + " ";
+				path += "qx " + px[3] + " " + py[1] + " ";
+				path += "l " + px[3] + " " + py[2] + " ";
+				path += "qy " + px[2] + " " + py[3] + " ";
+				path += "l " + px[1] + " " + py[3] + " ";
+				path += "qx " + px[0] + " " + py[2] + " ";
+				path += "l " + px[0] + " " + py[1] + " ";
+				path += "qy " + px[1] + " " + py[0] + " ";
 				
+				/*
+				path += "m 25 0 l 75 0 ";
+				path += "qx 100 25 l 100 75 ";
+				*/
+				/*
+				path += "ae 75 25 25 25 0 90 ";
+				path += "ae 75 75 25 25 90 180 ";
+				path += "ae 25 75 25 25 180 270 ";
+				path += "ae 25 25 25 25 270 360 X E";
+				*/
 			
 			
 			}else{
@@ -55,10 +72,11 @@
 			
 			if(close===true || obj.fillColor){
 				fillColor = 'fillcolor="' + obj.fillColor + '"';
-				path += ' x e';
+				//path += ' x e';
 			}
 			
-			var html = '<v:shape ' + strokeColor +' coordorigin="0 0" coordsize="'+width+' '+height+'" ' + style + ' path="' + path + '"></v:shape>';
+			//var html = '<v:shape ' + strokeColor +' coordorigin="0 0" coordsize="'+width+' '+height+'" ' + style + ' path="' + path + '"></v:shape>';
+			var html = '<v:shape ' + strokeColor +' ' + fillColor +' coordorigin="0 0" coordsize="'+width+' '+height+'" ' + style + ' path="' + path + '"></v:shape>';
 			
 			this.container.append(html);
 		

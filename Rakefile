@@ -18,7 +18,7 @@ client_dist_dir  = ENV['DIST_DIR'] || File.join( prefix, 'dist' )
 client_debug_dir  = ENV['DEBUG_DIR'] || File.join( prefix, 'debug' )
 
 # The source files (in the order they are to be merged)
-client_files = %w{intro line path curve box outro}.map { |js| File.join( client_src, "#{js}.js" ) }
+client_files = %w{intro line path curve box elbow outro nodes invoker}.map { |js| File.join( client_src, "#{js}.js" ) }
 
 puts client_files
 
@@ -32,7 +32,7 @@ version    = File.read( File.join( prefix, 'version.txt' ) ).strip
 
 # Build tools
 rhino      = "java -jar #{build_dir}/js.jar"
-minfier    = "java -jar #{build_dir}/google-compiler-20100917.jar"
+minfier    = "java -jar #{build_dir}/google-compiler-20100917.jar "
 
 # Turn off output other than needed from `sh` and file commands
 verbose(false) 

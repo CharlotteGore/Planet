@@ -5,52 +5,11 @@
       <head>
       <title>Planet Sandbox</title>
       <script type="text/javascript" src="lib/jquery.min.js"></script>
-      <script type="text/javascript" src="debug/planet.js"></script>
+      <script type="text/javascript" src="dist/planet.min.js"></script>
       <link rel="stylesheet" href="css/style.css" type="text/css" />
       
       </head>
       <body>
-      <div id="drawing-surface" style="width:500px;height:500px;"></div>
-      <script type="text/javascript">
-      	$(document).ready(function(){
-			/*
-  		   	planet('#drawing-surface', "svg")
-  				.line({x1 : 0, y1 : 0, x2 : 100, y2 : 100, strokeColor : "#45D", strokeWidth : 1})
-  				.line({x1 : 100, y1 : 100, x2 : 90, y2: 100, strokeColor : "#45D", strokeWidth : 1})
-  				.line({x1 : 100, y1 : 100, x2 : 100, y2: 90, strokeColor : "#45D", strokeWidth : 1});
-  				*/
-
-			/*			
-			planet('#drawing-surface', "canvas")
-				.path({
-					startx : 0,
-					starty : 0,
-					points : [
-						{x : 100, y: 0},
-						{x : 100, y: 100},
-						{x : 50, y: 50}
-					],
-					strokeColor : "#45D",
-					// fillColor : "#287",
-					strokeWidth : 1,
-					close : false
-				});
-			
-			*/
-			
-			planet('#drawing-surface', "svg")
-				.box({
-					position : {x : 0, y : 0},
-					size : {w : 200, h : 100},
-					cornerRadius: 25,
-					strokeColor : "#333",
-					fillColor : "#eee",
-					strokeWidth : 1
-					
-				});
-			
-
-      	});
-      </script>
+      <div id="drawing-surface" style="width:1000px;height:1000px;"></div>
       </body>
       </html>

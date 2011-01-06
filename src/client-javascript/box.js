@@ -163,7 +163,65 @@ planet.vml.extend({
 	
 		box : function( obj ){
 
+			var px = [], py = [], q = (Math.PI / 2);
 
+			this.container.beginPath();
+
+			px[0] = obj.position.x;
+	        px[3] = px[0] + obj.size.w;
+	
+	        py[0] = obj.position.y;
+	        py[3] = py[0] + obj.size.h;
+	
+	        if (obj.cornerRadius) {
+	
+	            px[1] = px[0] + obj.cornerRadius;
+	            px[2] = px[3] - obj.cornerRadius;
+	            py[1] = py[0] + obj.cornerRadius;
+	            py[2] = py[3] - obj.cornerRadius;
+
+				this.container.moveTo(px[1], py[0]);
+	
+	            this.container.arc(px[2], py[1], obj.cornerRadius, q * 3, q * 4);
+	            this.container.arc(px[2], py[2], obj.cornerRadius, q * 4, q * 5);
+	            this.container.arc(px[1], py[2], obj.cornerRadius, q * 5, q * 6);
+	            this.container.arc(px[1], py[1], obj.cornerRadius, q * 6, q * 7);
+
+	
+	        } else {
+	        
+	        	this.container.moveTo(px[1], py[0]);
+	        	this.container.lineTo(px[3], py[0]);
+	        	this.container.lineTo(px[3], py[3]);
+	        	this.container.lineTo(px[0], py[3]);
+	        	this.container.lineTo(px[0], py[0]);
+	
+	        }
+			
+			if(this.pen.fillType === "fill"){
+				this.container.fillStyle = this.pen.fillColor;
+				this.container.fill();
+			}
+			if(this.pen.fillType === "gradient"){
+		
+				var grad = this.container.createLinearGradient(0, obj.position.y, 0, obj.position.y + obj.size.h);
+				grad.addColorStop(0, this.pen.gradientColor1);
+				grad.addColorStop(1, this.pen.gradientColor2);
+				
+				this.container.fillStyle = grad;
+				this.container.fill();
+				
+			}
+			
+			if(this.pen.strokeType !== "none"){
+				this.container.lineWidth = (this.pen.strokeWidth + 1);
+				this.container.strokeStyle = this.pen.strokeColor;
+				
+				this.container.stroke();
+			}
+			
+			this.container.closePath();
+			
 			return this;
 
 

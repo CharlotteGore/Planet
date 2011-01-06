@@ -111,7 +111,7 @@
 		defaultPen : {
 					strokeType : "none",
 					fillType : "none",
-					strokeWeight : 1,
+					strokeWidth : 1,
 					strokeColor : "#000",
 					fillColor : "#000",
 					gradientColor1 : "#000",

@@ -1,8 +1,55 @@
+/* 
+
+	THIS IS JUNK CODE 
+	
+*/
+
+var nodes = function( obj ){
+
+	this.x = obj.x;
+	this.y = obj.y;
+	this.hw = obj.w / 2;
+	this.hh = obj.h / 2;
+	
+	this.connectors = {
+		up : {
+			x : ( this.x + this.hw ),
+			y : ( this.y )		
+		},
+		down : {
+			x : ( this.x + this.hw ),
+			y : ( this.y + this.hh + this.hh )
+		},
+		left : {
+			x : ( this.x ),
+			y : ( this.y + this.hh )
+		},
+		right : {
+			direction : "e",
+			x : (this.x + this.hw + this.hw),
+			y : ( this.y + this.hh )
+		}
+
+	};
+	
+	return this;
+
+};
+
+var data = [
+	{x : 120, y : 0, w : 200, h : 59},
+	{x : 120, y : 150, w : 200, h : 159},
+	{x : 360, y : 330, w : 200, h : 60},
+	{x : 0, y : 330, w : 200, h : 59},
+	{x : 240, y : 450, w : 200, h : 59},
+	{x : 480, y : 450, w : 200, h : 59}
+];
+
 var node = [];
 $(document).ready(function () {
 
 
-	var earth = planet('#drawing-surface', "svg"), n;
+	var earth = planet('#drawing-surface'), n;
 	
 	earth.setDrawAttributes({
 		strokeColor: "#ddd",

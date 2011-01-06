@@ -1,5 +1,11 @@
+/*
+	path.js
+	
+	usage: planetObj.path({startx : number, starty : number, points : [ {x : number, y : number}... ]})
+*/
 
-	// Path drawing functions
+	
+	
 	
 	planet.vml.extend({
 	
@@ -111,34 +117,37 @@
 	
 		path : function( obj ){
 		
-			if(obj.fillColor){
-				this.container.fillStyle = obj.fillColor;
+			this.container.beginPath();
+		
+			if(this.pen.fillType !== 'none'){
+				this.container.fillStyle = this.pen.fillColor;
 			}
 			
-			if(obj.strokeColor){
-				this.container.lineWidth = (obj.strokeWidth ? obj.strokeWidth : 1);
-				this.container.strokeStyle = (obj.strokeColor ? obj.strokeColor : "#000");
+			if(this.pen.strokeType !== "none"){
+				this.container.lineWidth = (this.pen.strokeWidth + 1);
+				this.container.strokeStyle = this.pen.strokeColor;
 				
 			}
 		
-			this.container.moveTo(obj.startx, obj.starty);
+			this.container.moveTo(Math.floor(obj.startx), Math.floor(obj.starty));
 			
 			for(i = 0, il = obj.points.length; i < il ; i++){
-				this.container.lineTo(obj.points[i].x, obj.points[i].y);
+				this.container.lineTo(Math.floor(obj.points[i].x), Math.floor(obj.points[i].y));
 			}
 			
-			if(obj.close || obj.fillColor){
-				this.container.lineTo(obj.startx, obj.starty);
+			if(obj.close || this.pen.fillType !== 'none'){
+				this.container.lineTo(Math.floor(obj.startx), Math.floor(obj.starty));
 			}
 			
-			if(obj.fillColor){
+			if(this.pen.fillType === "fill"){
 				this.container.fill();
 			}
 			
-			if(obj.strokeColor){
+			if(this.pen.strokeType !== "none"){
 				this.container.stroke();
-				
 			}
+			
+			this.container.closePath();
 			
 			return this;
 		

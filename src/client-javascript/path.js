@@ -26,15 +26,25 @@
 
 			if(this.pen.fillType !== "none" || obj.close===true){
 
-				path += ' x e';
-			
-				if(this.pen.fillType === "fill"){
-					
-					vEl.setAttribute('fillcolor', this.pen.fillColor);
-			
-				}else if(this.pen.fillType === "gradient"){
-					// do nothing yet
-				}
+			    path += ' x e';
+
+			    if (this.pen.fillType === "fill") {
+
+			        $(vEl).attr('fillcolor', this.pen.fillColor);
+
+			    } else if (this.pen.fillType === "gradient") {
+
+			        $(vEl).attr('fillcolor', this.pen.gradientColor1);
+
+			        var fill = document.createElement('v:fill');
+			        $(fill).attr('type', 'gradient');
+			        $(fill).attr('color2', this.pen.gradientColor2);
+			        $(fill).attr('method', 'linear sigma');
+			        $(fill).attr('angle', '180');
+
+			        $(vEl).append(fill);
+
+			    }
 			}else {
 			
 				vEl.setAttribute('filled', 'False');
@@ -68,12 +78,16 @@
 			
 			if(this.pen.fillType !== "none" || obj.close===true){
 				d += "Z";
-				
-				if(this.pen.fillType === "fill"){
-					shape.setAttributeNS(null, "fill", this.pen.fillColor);
-				}else if(this.pen.fillType === "gradient"){
-					// do nothing yet
+
+				if (this.pen.fillType === "fill") {
+
+				    shape.setAttributeNS(null, "fill", this.pen.fillColor);
+
+				} else if (this.pen.fillType === "gradient") {
+				    var gradId = this.createGradient(this.pen.gradientColor1, this.pen.gradientColor2);
+				    shape.setAttributeNS(null, "fill", "url(#" + gradId + ")");
 				}
+
 			}else {
 			
 				shape.setAttributeNS(null, "fill", "none");

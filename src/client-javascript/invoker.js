@@ -7,12 +7,11 @@ $(document).ready(function () {
 	earth.setDrawAttributes({
 		strokeColor: "#ddd",
 		strokeType : "line",
-		fillType : "fill",
+		fillType : "gradient",
 		fillColor: "#eee",
-		gradientColor1: "#d9d9d9",
+		gradientColor1: "#ccc",
 		gradientColor2: "#eee",
-		gradientAngle : 0,
-        strokeWidth: 2
+        strokeWidth: 1
 	});
 
     for (i = 0, il = data.length; i < il; i++) {
@@ -37,10 +36,10 @@ $(document).ready(function () {
     }
 	
 	earth.setDrawAttributes({
-		strokeColor: "#ddd",
+		strokeColor: "#999",
 		fillType : "none",
 		strokeType : "line",
-        strokeWidth: 5
+        strokeWidth: 2
 	});
 
     earth.elbow({
@@ -50,9 +49,11 @@ $(document).ready(function () {
             y: node[0].connectors.down.y
         },
         target: {
+            direction: "up",
             x: node[1].connectors.up.x,
             y: node[1].connectors.up.y
-        }
+        },
+        type : "directional"
     }).elbow({
         origin: {
             direction: "right",
@@ -60,9 +61,11 @@ $(document).ready(function () {
             y: node[1].connectors.right.y
         },
         target: {
+            direction: "up",
             x: node[2].connectors.up.x,
             y: node[2].connectors.up.y
-        }
+        },
+        type: "directional"
     }).elbow({
         origin: {
             direction: "left",
@@ -70,9 +73,11 @@ $(document).ready(function () {
             y: node[1].connectors.left.y
         },
         target: {
+            direction: "up",
             x: node[3].connectors.up.x,
             y: node[3].connectors.up.y
-        }
+        },
+        type: "directional"
     }).elbow({
         origin: {
             direction: "down",
@@ -80,9 +85,11 @@ $(document).ready(function () {
             y: node[2].connectors.down.y
         },
         target: {
+            direction : "up",
             x: node[4].connectors.up.x,
             y: node[4].connectors.up.y
-        }
+        },
+        type: "directional"
     }).elbow({
         origin: {
             direction: "down",
@@ -90,9 +97,11 @@ $(document).ready(function () {
             y: node[2].connectors.down.y
         },
         target: {
+            direction: "up",
             x: node[5].connectors.up.x,
             y: node[5].connectors.up.y
-        }
+        },
+        type: "directional"
     });
 
 	

@@ -157,7 +157,51 @@
 				this.pen.extend = planet.extend;
 				this.pen.extend(planet.defaultPen);
 				return this;
-			}
+			},
+            createGradient : function( color1, color2 ){
+
+                var id, gradient, child;
+
+                this.gradientUID ? this.gradientUID++ : this.gradientUID = 1;
+                
+                id = 'user-grad-' + this.gradientUID;
+
+                if(!this.defsContainer){
+                
+                    this.defsContainer = document.createElementNS(this.svgNS,'defs');
+                    this.container.append(this.defsContainer);
+
+                }
+
+                gradient = document.createElementNS(this.svgNS, 'linearGradient');
+                gradient.setAttributeNS(null, 'id', id);
+
+                // need to calculate x1, x2, y1 and y2
+
+                gradient.setAttributeNS(null, 'x1', '0%');
+                gradient.setAttributeNS(null, 'y1', '0%');
+                gradient.setAttributeNS(null, 'x2', '0%');
+                gradient.setAttributeNS(null, 'y2', '100%');
+                gradient.setAttributeNS(null, 'spreadMethod', 'pad');
+                gradient.setAttributeNS(null, 'gradientUnits', 'objectBoundingBox');
+
+                child = document.createElementNS(this.svgNS, 'stop');
+                child.setAttributeNS(null, 'offset', '0%');
+                child.setAttributeNS(null, 'stop-color', color1);
+                
+                $(gradient).append(child);
+
+                child = document.createElementNS(this.svgNS, 'stop');
+                child.setAttributeNS(null, 'offset', '100%');
+                child.setAttributeNS(null, 'stop-color', color2);
+
+                $(gradient).append(child);
+
+                $(this.defsContainer).append(gradient);
+
+                return id;
+
+            }
 		},
 		canvas : {
 			init : function( selector ){

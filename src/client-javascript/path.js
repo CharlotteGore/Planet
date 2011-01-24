@@ -21,9 +21,9 @@
 			$(vEl).attr('coordorigin', '0 0');
 			$(vEl).attr('coordsize', width + ' ' + height);
 
-			path = 'm '+Math.floor(obj.startx)+','+Math.floor(obj.starty)+' ';
+			path = 'm '+Math.floor(obj.points[0].x)+','+Math.floor(obj.points[0].y)+' ';
 			
-			for(i = 0, il = obj.points.length; i < il ; i++){
+			for(i = 1, il = obj.points.length; i < il ; i++){
 				path += 'l '+Math.floor(obj.points[i].x)+','+Math.floor(obj.points[i].y) + ' ';
 			}
 			
@@ -74,9 +74,9 @@
 	
 		path : function( obj ){
 		
-			var d = "M "+obj.startx+" "+obj.starty+" ", i, il;
+			var d = "M "+obj.points[0].x+" "+obj.points[0].y+" ", i, il;
 			
-			for(i = 0, il = obj.points.length; i < il ; i++){
+			for(i = 1, il = obj.points.length; i < il ; i++){
 				d += "L"+obj.points[i].x+" "+obj.points[i].y;
 			}
 
@@ -129,14 +129,14 @@
 				
 			}
 		
-			this.container.moveTo(Math.floor(obj.startx), Math.floor(obj.starty));
+			this.container.moveTo(Math.floor(obj.points[0].x), Math.floor(obj.points[0].y));
 			
-			for(i = 0, il = obj.points.length; i < il ; i++){
+			for(i = 1, il = obj.points.length; i < il ; i++){
 				this.container.lineTo(Math.floor(obj.points[i].x), Math.floor(obj.points[i].y));
 			}
 			
 			if(obj.close || this.pen.fillType !== 'none'){
-				this.container.lineTo(Math.floor(obj.startx), Math.floor(obj.starty));
+				this.container.lineTo(Math.floor(obj.points[0].x), Math.floor(obj.points[0].y));
 			}
 			
 			if(this.pen.fillType === "fill"){

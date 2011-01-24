@@ -7,9 +7,8 @@
 		line : function( obj ){
 			// Basically a line is very short stroked path, making this is a shortcut to Path.
 			this.path({
-				startx : obj.x1,
-				starty : obj.y1,
 				points : [
+					{x : obj.x1, y : obj.y1},
 					{x : obj.x2, y : obj.y2}
 					
 				],

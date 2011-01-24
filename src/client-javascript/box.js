@@ -182,10 +182,10 @@ planet.vml.extend({
 
 				this.container.moveTo(px[1], py[0]);
 	
-	            this.container.arc(px[2], py[1], obj.cornerRadius, q * 3, q * 4);
-	            this.container.arc(px[2], py[2], obj.cornerRadius, q * 4, q * 5);
-	            this.container.arc(px[1], py[2], obj.cornerRadius, q * 5, q * 6);
-	            this.container.arc(px[1], py[1], obj.cornerRadius, q * 6, q * 7);
+	            this.container.arc(px[2], py[1], obj.cornerRadius, q * 3, q * 4, 0);
+	            this.container.arc(px[2], py[2], obj.cornerRadius, q * 4, q * 5, 0);
+	            this.container.arc(px[1], py[2], obj.cornerRadius, q * 5, q * 6, 0);
+	            this.container.arc(px[1], py[1], obj.cornerRadius, q * 6, q * 7, 0);
 
 	
 	        } else {

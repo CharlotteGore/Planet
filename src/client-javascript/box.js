@@ -1,4 +1,4 @@
-/* box.js */
+	/* box.js */
 
 planet.vml.extend({
 
@@ -46,8 +46,21 @@ planet.vml.extend({
 
         }
 
-        $(vEl).attr('strokecolor', this.pen.strokeColor);
-        $(vEl).attr('strokeweight', this.pen.strokeWidth);
+
+
+		if(this.pen.strokeType==='none'){
+		
+			var stroke = document.createElement('v:stroke');
+                $(stroke).attr('on', 'False');
+
+                $(vEl).append(stroke);
+
+		}else{
+			$(vEl).attr('strokeweight', this.pen.strokeWidth);
+			$(vEl).attr('strokecolor', this.pen.strokeColor);
+
+
+		}
 
 
         if (close === true || this.pen.fillColor !== "none") {
@@ -167,11 +180,11 @@ planet.vml.extend({
 
 			this.container.beginPath();
 
-			px[0] = obj.position.x;
+			px[0] = obj.position.x + 0.5;
 	        px[3] = px[0] + obj.size.w;
 	
-	        py[0] = obj.position.y;
-	        py[3] = py[0] + obj.size.h;
+	        py[0] = obj.position.y + 0.5;
+	        py[3] = py[0] + obj.size.h + 0.5;
 	
 	        if (obj.cornerRadius) {
 	
@@ -190,11 +203,11 @@ planet.vml.extend({
 	
 	        } else {
 	        
-	        	this.container.moveTo(px[1], py[0]);
-	        	this.container.lineTo(px[3], py[0]);
-	        	this.container.lineTo(px[3], py[3]);
-	        	this.container.lineTo(px[0], py[3]);
-	        	this.container.lineTo(px[0], py[0]);
+				this.container.moveTo(px[1], py[0]);
+				this.container.lineTo(px[3], py[0]);
+				this.container.lineTo(px[3], py[3]);
+				this.container.lineTo(px[0], py[3]);
+				this.container.lineTo(px[0], py[0]);
 	
 	        }
 			
@@ -214,7 +227,7 @@ planet.vml.extend({
 			}
 			
 			if(this.pen.strokeType !== "none"){
-				this.container.lineWidth = (this.pen.strokeWidth + 1);
+				this.container.lineWidth = (this.pen.strokeWidth);
 				this.container.strokeStyle = this.pen.strokeColor;
 				
 				this.container.stroke();

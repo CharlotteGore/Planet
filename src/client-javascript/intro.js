@@ -17,46 +17,74 @@
 	var supportedModes = {
 		vml : function(){
 		
-			var a, b, doesSupport, headElement, styleElement, HTMLTagRef;
+			var doesSupport = 'untested';
+
+			return function(){
+
+				if(doesSupport==='untested'){
+
+					var a, b, headElement = document.getElementsByTagName("head")[0], styleElement, HTMLTagRef;
 			
-			a = document.createElement('div');
-			a.innerHTML = '<v:shape id="vml_flag1" adj="1" />';
-			b = a.firstChild;
+					a = document.createElement('div');
+					a.innerHTML = '<v:shape id="vml_flag1" adj="1" />';
+					b = a.firstChild;
 			
-			$('body').append(a);
+					document.getElementsByTagName("body")[0].appendChild(a);
 			
-			b.style.behavior = "url(#default#VML)";
+					b.style.behavior = "url(#default#VML)";
 			
-			doesSupport = b ? typeof b.adj == "object": true;
+					doesSupport = b ? typeof b.adj == "object": true;
 			
-			$('body').remove(a);
+					$(a).remove();
 			
-			if(doesSupport){
-					headElement = document.getElementsByTagName("head")[0];
-					styleElement = document.createElement("style");
-					styleElement.type = "text/css";
-					headElement.appendChild(styleElement);
-					styleElement.styleSheet.cssText = "v\\:rect, v\\:roundrect, v\\:line, v\\:polyline, v\\:curve, v\\:arc, v\\:oval, v\\:image, v\\:shape, v\\:group, v\\:skew, v\\:stroke, v\\:fill { behavior:url(#default#VML); display:inline-block }";
+					if(doesSupport){
+							headElement = document.getElementsByTagName("head")[0];
+							styleElement = document.createElement("style");
+							styleElement.type = "text/css";
+							headElement.appendChild(styleElement);
+							styleElement.styleSheet.cssText = "v\\:rect, v\\:roundrect,v\\:textbox, v\\:line, v\\:polyline, v\\:curve, v\\:arc, v\\:oval, v\\:image, v\\:shape, v\\:group, v\\:skew, v\\:stroke, v\\:fill { behavior:url(#default#VML); display:inline-block }";
 	
-					HtmlTagRef = document.getElementsByTagName('HTML')[0];
-					HtmlTagRef.setAttribute('xmlns:v','urn:schemas-microsoft-com:vml');
+							HtmlTagRef = document.getElementsByTagName('HTML')[0];
+							HtmlTagRef.setAttribute('xmlns:v','urn:schemas-microsoft-com:vml');
 					
-					document.namespaces.add("v","urn:schemas-microsoft-com:vml");
+							document.namespaces.add("v","urn:schemas-microsoft-com:vml");
 	
-			}
+					}
+
+				}
 			
-			return doesSupport;
+				return doesSupport;
+
+			};
 		}(),
 		svg : function(){
 			return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
 		}(),
 		canvas : function(){
-			var elem = document.createElement('canvas');
-			return !!(elem.getContext && elem.getContext('2d'));
+			
+			var doesSupport = 'untested';
+
+			return function(){
+				
+				if(doesSupport==='untested'){
+
+					var elem = document.createElement('canvas');
+					if(elem.getContext && elem.getContext('2d')){
+						doesSupport = true;
+					}else{
+						doesSupport = false;
+					}
+
+				}
+
+				return doesSupport;
+
+			};
 		}()
 	},
 	
 	planet;
+
 	
 	planet = function( selector, mode ){
 		// selects VML, VML not supported: Try Canvas, then SVG, then abort
@@ -65,12 +93,12 @@
 		
 		var priority = ["canvas","svg","vml"], i, il;
 		
-		if(mode && supportedModes[mode]){
+		if(mode && supportedModes[mode]()){
 			return new planet[mode].init( selector );
 		}else{
 			for(i = 0, il = priority.length; i < il ;i++){
 			
-				if(supportedModes[priority[i]]){
+				if(supportedModes[priority[i]]()){
 					return new planet[priority[i]].init( selector );
 				}
 			
@@ -207,15 +235,15 @@
 			init : function( selector ){
 				var canvas, container = $(selector);
 				
-				canvas = document.createElement("canvas");
+				this.canvas = document.createElement("canvas");
 				
-				$(canvas)
+				$(this.canvas)
 					.attr('height', container.height())
 					.attr('width', container.width());
 				
-				container.append(canvas);
+				container.append(this.canvas);
 				
-				this.container = canvas.getContext('2d');
+				this.container = this.canvas.getContext('2d');
 				
 				this.mode = "canvas";
 				
@@ -232,10 +260,11 @@
 			if(isVMLSupported){
 				methods.push("vml");
 			}
-			
+
 			if(isSVGSupported){
 				methods.push("svg");
 			}
+			
 			
 			if(isCanvasSupported){
 				methods.push("canvas");
@@ -245,7 +274,6 @@
 		}
 	});
 	
-	// references to make things easier...
 	planet.vml.init.prototype = planet.vml;
 	planet.svg.init.prototype = planet.svg;
 	planet.canvas.init.prototype = planet.canvas;
@@ -255,18 +283,13 @@
 
 	var setDrawAttributes = {
 		setDrawAttributes : function( obj ){
-			/*
-			if(!this.pen){
-				this.pen = {};
-			}
-			if(!this.pen.extend){
-				this.pen.extend = planet.extend;
-			}*/
+
 			this.pen.extend( obj );
+
+			return this;
 		}
 	};
 	
 	planet.vml.extend(setDrawAttributes);
 	planet.svg.extend(setDrawAttributes);
 	planet.canvas.extend(setDrawAttributes);
- 

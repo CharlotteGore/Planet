@@ -69,8 +69,8 @@
 		}
 	
 	});
-	
-	planet.svg.extend({
+
+		planet.svg.extend({
 	
 		path : function( obj ){
 		
@@ -124,19 +124,19 @@
 			}
 			
 			if(this.pen.strokeType !== "none"){
-				this.container.lineWidth = (this.pen.strokeWidth + 1);
+				this.container.lineWidth = (this.pen.strokeWidth);
 				this.container.strokeStyle = this.pen.strokeColor;
 				
 			}
 		
-			this.container.moveTo(Math.floor(obj.points[0].x), Math.floor(obj.points[0].y));
+			this.container.moveTo(obj.points[0].x  + 0.5, obj.points[0].y + 0.5);
 			
 			for(i = 1, il = obj.points.length; i < il ; i++){
-				this.container.lineTo(Math.floor(obj.points[i].x), Math.floor(obj.points[i].y));
+				this.container.lineTo(obj.points[i].x + 0.5, obj.points[i].y + 0.5);
 			}
 			
 			if(obj.close || this.pen.fillType !== 'none'){
-				this.container.lineTo(Math.floor(obj.points[0].x), Math.floor(obj.points[0].y));
+				this.container.lineTo(obj.points[0].x + 0.5, obj.points[0].y + 0.5);
 			}
 			
 			if(this.pen.fillType === "fill"){
@@ -154,4 +154,3 @@
 		}
 		
 	});
-	

@@ -1,7 +1,3 @@
-
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
-
 prefix    = File.dirname( __FILE__)
 
 # Directory variables

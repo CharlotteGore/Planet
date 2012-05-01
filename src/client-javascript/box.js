@@ -4,7 +4,7 @@ planet.vml.extend({
 
     box: function (obj) {
 
-        var path = "", px = [], py = [], p, vEl, width = this.container.width(), height = this.container.height(), i, il;
+        var path = "", px = [], py = [], p, vEl, width = this.width, height = this.height, i, il;
 
         vEl = document.createElement('v:shape');
 
@@ -21,20 +21,26 @@ planet.vml.extend({
 
         if (obj.cornerRadius) {
 
-            px[1] = px[0] + obj.cornerRadius;
-            px[2] = px[3] - obj.cornerRadius;
-            py[1] = py[0] + obj.cornerRadius;
-            py[2] = py[3] - obj.cornerRadius;
+			if(typeof obj.cornerRadius==='number'){
 
-            path += "m " + px[1] + " " + py[0] + " ";
-            path += "l " + px[2] + " " + py[0] + " ";
-            path += "qx " + px[3] + " " + py[1] + " ";
-            path += "l " + px[3] + " " + py[2] + " ";
-            path += "qy " + px[2] + " " + py[3] + " ";
-            path += "l " + px[1] + " " + py[3] + " ";
-            path += "qx " + px[0] + " " + py[2] + " ";
-            path += "l " + px[0] + " " + py[1] + " ";
-            path += "qy " + px[1] + " " + py[0] + " ";
+				obj.cornerRadius = [obj.cornerRadius, obj.cornerRadius, obj.cornerRadius, obj.cornerRadius];
+
+			}
+            //px[1] = px[0] + obj.cornerRadius;
+           // px[2] = px[3] - obj.cornerRadius;
+            //py[1] = py[0] + obj.cornerRadius;
+           // py[2] = py[3] - obj.cornerRadius;
+
+            path += "m " + (px[0] + obj.cornerRadius[0]) + " " + py[0] + " ";
+            path += "l " + (px[3] - obj.cornerRadius[1]) + " " + py[0] + " ";
+            path += "qx " + px[3] + " " + (py[0] + obj.cornerRadius[1]) + " ";
+            path += "l " + px[3] + " " + (py[3] - obj.cornerRadius[2])  + " ";
+            path += "qy " + (px[3] - obj.cornerRadius[2]) + " " + py[3] + " ";
+            path += "l " + (px[0] + obj.cornerRadius[3]) + " " + py[3] + " ";
+            path += "qx " + px[0] + " " + (py[3] - obj.cornerRadius[3]) + " ";
+            path += "l " + px[0] + " " + (py[0] + obj.cornerRadius[0]) + " ";
+            path += "qy " + (px[0] + obj.cornerRadius[0]) + " " + py[0] + " ";
+
 
         } else {
 
@@ -85,8 +91,6 @@ planet.vml.extend({
 
             }
 
-        } else {
-
         }
 
         $(vEl).attr('path', path);
@@ -114,21 +118,26 @@ planet.vml.extend({
 
 	        if (obj.cornerRadius) {
 
-	            px[1] = px[0] + obj.cornerRadius;
-	            px[2] = px[3] - obj.cornerRadius;
-	            py[1] = py[0] + obj.cornerRadius;
-	            py[2] = py[3] - obj.cornerRadius;
-	            r = obj.cornerRadius + "," + obj.cornerRadius;
+				if(typeof obj.cornerRadius==='number'){
+			
+					obj.cornerRadius = [obj.cornerRadius, obj.cornerRadius, obj.cornerRadius, obj.cornerRadius];
 
-	            d += "M " + px[1] + " " + py[0] + " ";
-	            d += "L " + px[2] + " " + py[0] + " ";
-	            d += "A " + r + " 90 0,1 " + px[3] + "," + py[1];
-	            d += "L " + px[3] + " " + py[2];
-	            d += "A " + r + " 90 0,1 " + px[2] + "," + py[3];
-	            d += "L " + px[1] + " " + py[3];
-	            d += "A " + r + " 90 0,1 " + px[0] + "," + py[2];
-	            d += "L " + px[0] + " " + py[1];
-	            d += "A " + r + " 90 0,1 " + px[1] + "," + py[0];
+				}
+
+	            d += "M " + (px[0] + obj.cornerRadius[0]) + " " + py[0] + " ";
+
+	            d += "L " + (px[3] - obj.cornerRadius[1]) + " " + py[0] + " ";
+	            d += "A " + obj.cornerRadius[1] + "," + obj.cornerRadius[1] + " 90 0,1 " + px[3] + "," + (py[0] + obj.cornerRadius[1]);
+
+	            d += "L " + px[3] + " " + (py[3] - obj.cornerRadius[2]);
+
+	            d += "A " + obj.cornerRadius[2] + "," + obj.cornerRadius[2] + " 90 0,1 " + (px[3] - obj.cornerRadius[2]) + "," + py[3];
+
+	            d += "L " + (px[0] + obj.cornerRadius[3]) + " " + py[3];
+	            d += "A " + obj.cornerRadius[3] + "," + obj.cornerRadius[3] + " 90 0,1 " + px[0] + "," + (py[3] - obj.cornerRadius[3]);
+
+	            d += "L " + px[0] + " " + (py[0] + obj.cornerRadius[0]);
+	            d += "A " + obj.cornerRadius[0] + "," + obj.cornerRadius[0] + " 90 0,1 " + (px[0] + obj.cornerRadius[0]) + "," + py[0];
 
 	        } else {
 
@@ -188,29 +197,23 @@ planet.vml.extend({
 	
 	        if (obj.cornerRadius) {
 	
-	            px[1] = px[0] + obj.cornerRadius;
-	            px[2] = px[3] - obj.cornerRadius;
-	            py[1] = py[0] + obj.cornerRadius;
-	            py[2] = py[3] - obj.cornerRadius;
+				if(typeof obj.cornerRadius==='number'){
 
-				this.container.moveTo(px[1], py[0]);
-	
-	            this.container.arc(px[2], py[1], obj.cornerRadius, q * 3, q * 4, 0);
-	            this.container.arc(px[2], py[2], obj.cornerRadius, q * 4, q * 5, 0);
-	            this.container.arc(px[1], py[2], obj.cornerRadius, q * 5, q * 6, 0);
-	            this.container.arc(px[1], py[1], obj.cornerRadius, q * 6, q * 7, 0);
+					obj.cornerRadius = [obj.cornerRadius, obj.cornerRadius, obj.cornerRadius, obj.cornerRadius];
 
+				}
 	
-	        } else {
-	        
-				this.container.moveTo(px[1], py[0]);
-				this.container.lineTo(px[3], py[0]);
-				this.container.lineTo(px[3], py[3]);
-				this.container.lineTo(px[0], py[3]);
-				this.container.lineTo(px[0], py[0]);
+				this.container.moveTo(px[0] + obj.cornerRadius[0], py[0]);
+	
+				this.container.arc(px[3] - obj.cornerRadius[1], py[0] + obj.cornerRadius[1], obj.cornerRadius[1], q * 3, q * 4, 0);
+				this.container.arc(px[3] - obj.cornerRadius[2], py[3] - obj.cornerRadius[2], obj.cornerRadius[2], q * 4, q * 5, 0);
+				this.container.arc(px[0] + obj.cornerRadius[3], py[3] - obj.cornerRadius[3], obj.cornerRadius[3], q * 5, q * 6, 0);
+				this.container.arc(px[0] + obj.cornerRadius[0], py[0] + obj.cornerRadius[0], obj.cornerRadius[0], q * 6, q * 7, 0);
+
+
 	
 	        }
-			
+	        
 			if(this.pen.fillType === "fill"){
 				this.container.fillStyle = this.pen.fillColor;
 				this.container.fill();

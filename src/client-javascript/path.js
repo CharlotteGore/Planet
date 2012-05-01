@@ -13,7 +13,7 @@
 		
 			// This is where it starts to get fookin' hard.
 			
-			var path = "", width = this.container.width(), height = this.container.height(), i, il;
+			var path = "", width = this.width, height = this.height, i, il;
 			
 			var vEl = document.createElement('v:shape');
 			
@@ -102,7 +102,7 @@
 			
 			
 			shape.setAttributeNS(null, "stroke", this.pen.strokeColor);
-			shape.setAttributeNS(null, "stroke-width", (this.pen.strokeWidth + 1) + "px");	
+			shape.setAttributeNS(null, "stroke-width", this.pen.strokeWidth + "px");	
 			
 			shape.setAttributeNS(null, "d", d);
 			

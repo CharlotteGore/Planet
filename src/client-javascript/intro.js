@@ -15,7 +15,7 @@
 	// VML..
 	
 	var supportedModes = {
-		vml : function(){
+		vml : (function(){
 		
 			var doesSupport = 'untested';
 
@@ -33,7 +33,7 @@
 			
 					b.style.behavior = "url(#default#VML)";
 			
-					doesSupport = b ? typeof b.adj == "object": true;
+					doesSupport = b ? typeof b.adj === "object": true;
 			
 					$(a).remove();
 			
@@ -56,11 +56,11 @@
 				return doesSupport;
 
 			};
-		}(),
+		}()),
 		svg : function(){
 			return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
 		}(),
-		canvas : function(){
+		canvas : (function(){
 			
 			var doesSupport = 'untested';
 
@@ -80,7 +80,7 @@
 				return doesSupport;
 
 			};
-		}()
+		}())
 	},
 	
 	planet;
@@ -112,7 +112,7 @@
 	
 		for ( ; i < length; i++ ) {
 			// Only deal with non-null/undefined values
-			if ( (options = arguments[ i ]) != null ) {
+			if ( (options = arguments[ i ]) !== null ) {
 				// Extend the base object
 				for ( name in options ) {
 					src = target[ name ];
@@ -159,6 +159,19 @@
 				return this;
 			}
 		},
+
+		forceMode : function( mode ){
+			
+			if(mode==="vml" || mode==="svg" || mode==="canvas"){
+				
+				planet._mode = mode;
+
+				return this;
+
+			}
+
+		},
+
 		svg : {
 			init : function( selector ){
 				// For SVG, we create an SVG element in the SVG namespace and append to the 
@@ -171,9 +184,13 @@
 				svg.setAttributeNS(null, "version", "1.1");
 				svg.setAttributeNS(null, "style", "position:absolute;top:0;left:0");
 				
+				this.width = container.width();
+				this.height = container.height();
+
 				$(svg)
-					.css("width",container.width())
-					.css("height",container.height());
+					.css("width",this.width)
+					.css("height",this.height)
+					.css("position", 'absolute');
 				
 				this.container = $(svg);
 				
@@ -190,9 +207,9 @@
 
                 var id, gradient, child;
 
-                this.gradientUID ? this.gradientUID++ : this.gradientUID = 1;
+                planet.gradientUID ? planet.gradientUID++ : planet.gradientUID = 1;
                 
-                id = 'user-grad-' + this.gradientUID;
+                id = 'user-grad-' + planet.gradientUID;
 
                 if(!this.defsContainer){
                 
@@ -237,9 +254,13 @@
 				
 				this.canvas = document.createElement("canvas");
 				
+				this.width = container.width();
+				this.height = container.height();
+
 				$(this.canvas)
-					.attr('height', container.height())
-					.attr('width', container.width());
+					.attr('height', this.height)
+					.attr('width', this.width)
+					.css('position', 'absolute');
 				
 				container.append(this.canvas);
 				

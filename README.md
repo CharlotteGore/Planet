@@ -6,51 +6,48 @@ Introduction
 
 A minimalist cross-browser library for drawing basic vector graphics in either Canvas, SVG or VML.
 
-When choosing a rendering mode, the priority is Canvas, then SVG, then VML. In practice for modern browsers, it's Canvas for decent browsers, VML for IE.
+When choosing a rendering mode, the priority is Canvas, then SVG, then VML. In practice it's Canvas for decent browsers, VML for IE.
+
+This repository isn't being actively developed but any bugs are fixed.
 
 Implemented
 -----------
 
-Lines and Paths. This pretty much allows you to draw arbitrary shapes to the screen, with a single fill and/or stroke colour.
+Lines, paths, boxes. It's a small subset of vector graphics but lets you have CSS3 style rounded edges in IE6, IE7 and IE8... which is the reason this library exists in the first place!
 
 
 Priorities
 ----------
 
-Utterly cross-platform, feature detectin' (not browser sniffin'), lightweight (currently 5k compiled and minified), fast, simple interface, easy to deploy and use.
+Cross-browser, feature detectin' (not browser sniffin'), lightweight (currently 5k compiled and minified), fast, simple interface, easy to deploy and use.
 
 Dependencies
 ------------
 
-jQuery. It's used for DOM manipulation and CSS3 selectors. To build you'll need Ruby, (let's say 1.9.2, to be sure), Ruby Gems, Rake and Java. To run the specs you'll need Jasmine. Google Closure Compiler, JSlint and Rhino are in the repository already.
+jQuery. It's used for DOM manipulation and CSS3 selectors. 
 
-Building
---------
+Planet now comes pre-assembled into the useable script files. jQuery and the build tools are no longer being distributed here.
 
-	git clone git@github.com:CharlotteGore/Planet.git
-	
-	cd planet
+Installing
+----------
 
-	rake
+In /dist there is planet.min.js, for use in production environments.
+In /debug there is planet.js, unminified. 
 
-The minified version goes in dist/planet.min.js, the debug version in debug/planet.js. 
+	<script type="text/javascript" src="/planet.min.js"
 
-Tests
------
-
-	rake jasmine
-	
-or
-
-	rake jasmine:ci
 	
 You'll need the Ruby gem 'jasmine' to run the specs.
+
+NOTE: I've long since stopped using Jasmine, I need to update this to something else. ;)
 
 Usage
 -----
 
-	var container = planet('#graphics-container');
+	var container = planet('#graphics-container'); // VERY IMPORTANT: This element MUST have an explicit WIDTH and HEIGHT. 
 
+
+	// draw a line. Set start and end. Usually better to use Path though...
 	container.line({
 		x1 : 0,
 		y1 : 0,
@@ -60,6 +57,7 @@ Usage
 		strokeWidth : 3 // defaults to 1 if you leave out the strokeWidth property
 	});
 	
+	// Draw a series of straight lines. 
 	container.path({
 		startx : 0,
 		starty : 0,
@@ -73,6 +71,20 @@ Usage
 		strokeColor : "#333", // no stroke colour property, no stroke.
 		strokeWidth : 2 // defaults to 1 if you leave out the strokeWidth property
 	});
+
+	container.box({
+
+        position: {
+            x: data[i].x,
+            y: data[i].y
+        },
+        size: {
+            w: data[i].w,
+            h: data[i].h
+        },
+        cornerRadius: 5
+
+	})
 
 or you can chain instructions...
 
@@ -89,7 +101,6 @@ Roadmap
 -------
 
 * Ovals and Circles
-* 'Boxes' (with and without rounded edges)
 * Lightweight JSON platform neutral Vector Graphic definition format.
 
 Author

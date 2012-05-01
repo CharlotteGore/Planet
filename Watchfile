@@ -1,6 +1,0 @@
-require 'watchr'
-
-watch( '^src/client-javascript/(.*)\js' ) {|md| 
-  puts("#{md[0]} updated. Rebuilding client-side JS....")
-  system("rake client")
-}
